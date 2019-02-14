@@ -106,9 +106,13 @@ Item {
 
             TextInput {
                 id: textInput
+                y: 5
+                height: 20
                 color: "#eeedeb"
                 text: qsTr("")
-                anchors.fill: parent
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.left: parent.left
                 font.pixelSize: 12
             }
         }
@@ -130,6 +134,8 @@ Item {
     }
 
 }
+
+
 
 
 
