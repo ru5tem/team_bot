@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QNetworkAccessManager>
+#include <QSettings>
+#include <QStandardPaths>
 
 
 class AppCore : public QObject
@@ -11,15 +13,16 @@ class AppCore : public QObject
 public:
     explicit AppCore(QObject *parent = nullptr);
     void init();
-
+    ~AppCore();
 signals:
     void openDialog();
     void addMessage(QString _message);
+    void loadLastUserName(QString _userName);
 
 public slots:
     void loginUser(QString _userName);
     void sendMessage(QString _message);
-    void readMessageFromServer(/*QNetworkReply *reply*/);
+    void readMessageFromServer();
 
 private:
     QString userName, botName;

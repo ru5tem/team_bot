@@ -5,9 +5,12 @@ Item {
     id: element
     width: 400
     height: 400
-    property alias backgroundTextInput: backgroundTextInput
+    property alias customTextInput: customTextInput
+    property alias topText: topText
+    property alias rectangleBottom: rectangleBottom
+    property alias rectangleCenter: rectangleCenter
+    property alias rectangleTop: rectangleTop
     property alias listView: listView
-    property alias textInput: textInput
     property alias buttonSend: buttonSend
 
     Rectangle {
@@ -20,6 +23,17 @@ Item {
         anchors.rightMargin: 0
         anchors.left: parent.left
         anchors.leftMargin: 0
+
+        Text {
+            id: topText
+            width: 200
+            height: 50
+            text: qsTr("Text")
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.top: parent.top
+            font.pixelSize: 12
+        }
     }
 
     Rectangle {
@@ -93,45 +107,33 @@ Item {
         anchors.left: parent.left
         anchors.leftMargin: 0
 
-        Rectangle {
-            id: backgroundTextInput
-            height: 25
-            color: "#ffffff"
+        CustomTextInput {
+            id: customTextInput
+            height: 40
             anchors.right: parent.right
-            anchors.rightMargin: 10
+            anchors.rightMargin: 0
             anchors.left: parent.left
-            anchors.leftMargin: 10
+            anchors.leftMargin: 0
             anchors.top: parent.top
             anchors.topMargin: 10
-
-            TextInput {
-                id: textInput
-                y: 5
-                height: 20
-                color: "#eeedeb"
-                text: qsTr("")
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                anchors.left: parent.left
-                font.pixelSize: 12
-            }
         }
 
         Button {
             id: buttonSend
-            y: 47
+            x: 10
             width: 100
-            height: 27
+            height: 20
             text: qsTr("Say")
+            anchors.top: customTextInput.bottom
+            anchors.topMargin: 10
             spacing: 8
             focusPolicy: Qt.TabFocus
             anchors.left: parent.left
             anchors.leftMargin: 10
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 10
         }
 
     }
+
 
 }
 
@@ -145,10 +147,18 @@ Item {
 
 
 
+
+
+
+
+
+
+
+
 /*##^## Designer {
-    D{i:1;anchors_width:200}D{i:4;anchors_height:160;anchors_width:110;anchors_x:8;anchors_y:80}
-D{i:3;anchors_height:154;anchors_width:200;anchors_x:80;anchors_y:117}D{i:2;anchors_height:200;anchors_width:200}
-D{i:15;anchors_height:20;anchors_width:80;anchors_x:20;anchors_y:5}D{i:14;anchors_height:84;anchors_width:200;anchors_x:128;anchors_y:316}
-D{i:16;anchors_height:20;anchors_width:80}
+    D{i:2;anchors_height:200;anchors_width:200}D{i:1;anchors_width:200}D{i:5;anchors_height:160;anchors_width:110;anchors_x:8;anchors_y:80}
+D{i:4;anchors_height:160;anchors_width:110;anchors_x:8;anchors_y:80}D{i:3;anchors_height:154;anchors_width:200;anchors_x:80;anchors_y:117}
+D{i:15;anchors_height:20;anchors_width:80;anchors_x:0;anchors_y:47}D{i:16;anchors_height:20;anchors_width:80;anchors_y:47}
+D{i:14;anchors_x:0;anchors_y:0}
 }
  ##^##*/

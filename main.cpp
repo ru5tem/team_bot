@@ -8,6 +8,9 @@ int main(int argc, char *argv[])
 {
     //QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF8"));
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QCoreApplication::setOrganizationName("Test");
+    QCoreApplication::setApplicationName("TeamBot");
+
 
     QGuiApplication app(argc, argv);
 

@@ -1,7 +1,6 @@
 #include "appcore.h"
 #include <QNetworkRequest>
 #include <QNetworkReply>
-
 #include <QUrl>
 #include <QString>
 #include <QXmlStreamReader>
@@ -9,18 +8,29 @@
 
 AppCore::AppCore(QObject *parent) : QObject(parent)
 {
-
 }
 
 void AppCore::init()
 {
     nam = new QNetworkAccessManager(this);
-    botName = "Bot";
+
+    QSettings settings;
+    userName = settings.value("lastUserName").toString();
+    emit loadLastUserName(userName);
+}
+
+AppCore::~AppCore()
+{
+    delete nam;
 }
 
 void AppCore::loginUser(QString _userName)
 {
     userName = _userName;
+
+    QSettings settings;
+    settings.setValue("lastUserName" , userName);
+    settings.sync();
     emit openDialog();
 }
 
@@ -32,28 +42,42 @@ void AppCore::sendMessage(QString _message)
     sendMessageToServer(userName, _message);
 }
 
-void AppCore::readMessageFromServer(/*QNetworkReply *reply*/)
+void AppCore::readMessageFromServer()
 {
+    QString botName, message;
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
 
     if (reply->error())
     {
-        qDebug() << reply->errorString();
-        qDebug() << reply->error();
         emit addMessage(reply->errorString());
         emit addMessage(reply->request().url().toString());
         return;
     }
 
-    emit addMessage("Сообщение получено");
-    QByteArray response = reply->readAll();
-
     /*Обработка сообщения*/
-    //QXmlStreamReader reader(response);
-    //QString botName =
-    //QString message =
-    //emit addMessage(botName +": "+message);
+    QByteArray response = reply->readAll();
+    QXmlStreamReader reader(response);
+    while (!reader.atEnd() && !reader.hasError())
+    {
+        QXmlStreamReader::TokenType token = reader.readNext();
+        if (token == QXmlStreamReader::StartDocument)
+            continue;
+        if (token == QXmlStreamReader::StartElement)
+        {
+            if (reader.name() == "bot_name")
+            {
+                reader.readNext();
+                botName = reader.text().toString();
+            }
+            if (reader.name() == "response")
+            {
+                reader.readNext();
+                message = reader.text().toString();
+            }
+        }
+    }
 
+    emit addMessage(botName +": "+message);
 }
 
 void AppCore::sendMessageToServer(QString _userName, QString _message)
@@ -62,10 +86,10 @@ void AppCore::sendMessageToServer(QString _userName, QString _message)
 
     QUrl url = QUrl(botServer);
     QNetworkRequest request(url);
-    request.setRawHeader("Nokia5250/10.0.011 (SymbianOS/9.4; U; Series60/5.0 Mozilla/5.0; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/525 (KHTML, like Gecko) Safari/525 3gpp-gba", "MyApp 1.0");
-    request.setRawHeader("Cache-Control", "no-cache");
-    request.setRawHeader("Content-Type", "text/html");
+
+    request.setRawHeader("User-Agent", "Mozilla/5.0 (compatible; Rigor/1.0.0; http://rigor.com)");
     request.setRawHeader("Accept", "*/*");
+
 
     QNetworkReply* reply = nam->get(request);
     connect(reply, SIGNAL(finished()),this, SLOT(readMessageFromServer()));

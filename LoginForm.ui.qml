@@ -1,14 +1,18 @@
 import QtQuick 2.4
 import QtQuick.Controls 2.5
 
+
 Item {
     id: element
     width: 400
     height: 400
-    property alias backgroundTextInput: backgroundTextInput
+    property alias customTextInput: customTextInput
+    property alias dividerHorizontal: dividerHorizontal
+    property alias rectangleCenterItems: rectangleCenterItems
+    property alias rectangleCenter: rectangleCenter
+    property alias rectangleTop: rectangleTop
     property alias headline: headline
     property alias lableName: lableName
-    property alias textInput: textInput
     property alias buttonStart: buttonStart
 
     Rectangle {
@@ -80,29 +84,15 @@ Item {
                 font.pixelSize: 12
             }
 
-            Rectangle {
-                id: backgroundTextInput
-                height: 25
-                color: "#ffffff"
-                anchors.top: lableName.bottom
-                anchors.topMargin: 10
+            CustomTextInput {
+                id: customTextInput
+                height: 40
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
-
-                TextInput {
-                    id: textInput
-                    color: "#eeedeb"
-                    text: qsTr("")
-                    anchors.verticalCenterOffset: 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                    cursorVisible: true
-                    horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 12
-                }
+                anchors.top: lableName.bottom
+                anchors.topMargin: 5
             }
 
             Button {
@@ -110,14 +100,29 @@ Item {
                 text: qsTr("Button")
                 spacing: 4
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.top: backgroundTextInput.bottom
-                anchors.topMargin: 10
+                anchors.top: customTextInput.bottom
+                anchors.topMargin: 15
             }
+
 
         }
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
