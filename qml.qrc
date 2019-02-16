@@ -5,11 +5,8 @@
         <file>LoginForm.ui.qml</file>
         <file>Dialog.qml</file>
         <file>DialogForm.ui.qml</file>
-        <file>WelcomScreen.qml</file>
-        <file>WelcomScreenForm.ui.qml</file>
         <file>CustomTextInput.qml</file>
         <file>fonts/DeansgateCondensed-Bold.ttf</file>
-        <file>ScalableСoord.qml</file>
         <file>Background.qml</file>
         <file>pictures/alps-background-beautiful-view-1227520.jpg</file>
     </qresource>
